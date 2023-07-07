@@ -51,6 +51,26 @@
       <artifactId>rest-assured</artifactId>
       <scope>test</scope>
     </dependency>
+    <!-->
+    Added by me
+    </!-->
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-info</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-smallrye-openapi</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-smallrye-metrics</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-smallrye-health-spi</artifactId>
+    </dependency>
+
   </dependencies>
   <build>
     <plugins>
