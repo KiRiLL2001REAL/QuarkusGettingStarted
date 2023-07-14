@@ -1,16 +1,15 @@
-package edu.my.service;
+package edu.my.rest;
 
-import config.AppConfig;
+import edu.my.config.IAppConfig;
+import edu.my.service.GreetingService;
+import io.smallrye.config.WithDefault;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
-import org.eclipse.microprofile.config.ConfigProvider;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
-
-import java.util.Optional;
 
 @Path("/hello")
 public class GreetingResource {
@@ -21,12 +20,13 @@ public class GreetingResource {
     @ConfigProperty(name = "greeting.prefix")
     String prefix;
     @ConfigProperty(name = "greeting.name")
-    Optional<String> name;
+    @WithDefault("world")
+    String name;
     @ConfigProperty(name = "greeting.postfix")
     String postfix;
 
     @Inject
-    AppConfig appConfig;
+    IAppConfig appConfig;
 
     @GET
     @Produces(MediaType.TEXT_PLAIN)
@@ -37,17 +37,9 @@ public class GreetingResource {
 
     @GET
     @Produces(MediaType.TEXT_PLAIN)
-    @Path("/database")
-    public String database() {
-        Optional<String> maybeDatabase = ConfigProvider.getConfig().getOptionalValue("database.name", String.class);
-        return "Connected database: " + maybeDatabase.orElse("None") + ".";
-    }
-
-    @GET
-    @Produces(MediaType.TEXT_PLAIN)
     @Path("/v1")
     public String hello1() {
-        return prefix + " " + name.orElse("world") + postfix;
+        return prefix + " " + name + postfix;
     }
 
     @GET
