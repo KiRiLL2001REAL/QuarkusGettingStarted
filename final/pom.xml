@@ -66,6 +66,21 @@
       <groupId>org.jboss.slf4j</groupId>
       <artifactId>slf4j-jboss-logmanager</artifactId>
     </dependency>
+    <!-- Hibernate ORM specific dependencies -->
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-hibernate-orm</artifactId>
+    </dependency>
+    <!-- Hibernate ORM specific dependencies -->
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-hibernate-orm-panache</artifactId>
+    </dependency>
+    <!-- JDBC driver dependencies -->
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-jdbc-postgresql</artifactId>
+    </dependency>
   </dependencies>
   <build>
     <plugins>
@@ -83,15 +98,6 @@
             </goals>
           </execution>
         </executions>
-      </plugin>
-      <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>${compiler-plugin.version}</version>
-        <configuration>
-          <compilerArgs>
-            <arg>-parameters</arg>
-          </compilerArgs>
-        </configuration>
       </plugin>
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
@@ -138,6 +144,21 @@
             </goals>
           </execution>
         </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>${compiler-plugin.version}</version>
+        <configuration>
+          <parameters>${maven.compiler.parameters}</parameters>
+          <annotationProcessorPaths>
+            <!-- Your existing annotation processor(s)... -->
+            <path>
+              <groupId>io.quarkus</groupId>
+              <artifactId>quarkus-panache-common</artifactId>
+              <version>${quarkus.platform.version}</version>
+            </path>
+          </annotationProcessorPaths>
+        </configuration>
       </plugin>
     </plugins>
   </build>
