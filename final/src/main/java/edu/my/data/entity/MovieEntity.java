@@ -14,6 +14,9 @@ public class MovieEntity extends PanacheEntityBase {
     @Column(name = "id")
     public Long id;
 
+    @Column(name = "name")
+    public String name;
+
     @Column(name = "description")
     public String description;
 
@@ -30,12 +33,12 @@ public class MovieEntity extends PanacheEntityBase {
     public String distributor;
 
     @Column(name = "country")
-    public String Country;
+    public String country;
 
     @Column(name = "release_year")
     public Integer releaseYear;
 
-    @OneToMany(mappedBy = "movieHasTag", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "movieEntity", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     public Set<MovieHasTagEntity> movieHasTagEntities = new HashSet<>();
 
     public void addMovieHasTagEntities(MovieHasTagEntity movieHasTag) {

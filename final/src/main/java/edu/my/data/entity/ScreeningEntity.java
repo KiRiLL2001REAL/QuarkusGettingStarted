@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Entity
 @Table(name = "screening")
@@ -25,5 +25,5 @@ public class ScreeningEntity extends PanacheEntityBase {
     public MovieEntity movieEntity;
 
     @Column(name = "showing_time")
-    public LocalDate showingTime;
+    public LocalTime showingTime;
 }

@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS public.ticket (
 
 
 
-INSERT INTO public.tag (id, name) OVERRIDING SYSTEM VALUE
+INSERT INTO tag (id, name) OVERRIDING SYSTEM VALUE
 VALUES
 	(1, '0+'),
 	(2, '6+'),
@@ -67,7 +67,7 @@ VALUES
 ALTER SEQUENCE tag_id_seq RESTART WITH 16;
 
 
-INSERT INTO public.movie (id, name, description, reasons_to_view, facts, duration, distributor, country, release_year) OVERRIDING SYSTEM VALUE
+INSERT INTO movie (id, name, description, reasons_to_view, facts, duration, distributor, country, release_year) OVERRIDING SYSTEM VALUE
 VALUES
 (
     1,
@@ -216,37 +216,58 @@ VALUES
 ALTER SEQUENCE movie_id_seq RESTART WITH 11;
 
 
-INSERT INTO public.movie_has_tag (id, id_movie, id_tag) OVERRIDING SYSTEM VALUE
+INSERT INTO movie_has_tag (id, id_movie, id_tag) OVERRIDING SYSTEM VALUE
 VALUES
-	(01, 1, 4),
-	(02, 1, 6),
-	(03, 1, 7),
-	(04, 2, 5),
-	(05, 2, 8),
-	(06, 2, 9),
-	(07, 2, 7),
-	(08, 3, 4),
-	(09, 3, 8),
-	(10, 4, 3),
-	(11, 4, 8),
-	(12, 4, 6),
-	(13, 4, 7),
-	(14, 5, 2),
-	(15, 5, 10),
-	(16, 6, 5),
-	(17, 6, 7),
-	(18, 7, 4),
-	(19, 7, 11),
-	(20, 7, 12),
-	(21, 8, 1),
-	(22, 8, 10),
-	(23, 9, 5),
-	(24, 9, 13),
-	(25, 9, 6),
-	(26, 9, 14),
-	(27, 10, 5),
+	( 1,  1,  4),
+	( 2,  1,  6),
+	( 3,  1,  7),
+	( 4,  2,  5),
+	( 5,  2,  8),
+	( 6,  2,  9),
+	( 7,  2,  7),
+	( 8,  3,  4),
+	( 9,  3,  8),
+	(10,  4,  3),
+	(11,  4,  8),
+	(12,  4,  6),
+	(13,  4,  7),
+	(14,  5,  2),
+	(15,  5, 10),
+	(16,  6,  5),
+	(17,  6,  7),
+	(18,  7,  4),
+	(19,  7, 11),
+	(20,  7, 12),
+	(21,  8,  1),
+	(22,  8, 10),
+	(23,  9,  5),
+	(24,  9, 13),
+	(25,  9,  6),
+	(26,  9, 14),
+	(27, 10,  5),
 	(28, 10, 15),
-	(29, 10, 7);
+	(29, 10,  7);
 
 ALTER SEQUENCE movie_has_tag_id_seq RESTART WITH 30;
 
+
+INSERT INTO hall (id, name, count_rows, row_capacity) OVERRIDING SYSTEM VALUE
+VALUES
+(
+    1,
+    'Малый зал',
+    10,
+    15
+), (
+    2,
+    'Средний зал',
+    12,
+    18
+), (
+    3,
+    'Большой зал',
+    15,
+    22
+);
+
+ALTER SEQUENCE hall_id_seq RESTART WITH 4;

@@ -17,7 +17,7 @@ public class TagEntity extends PanacheEntityBase {
     @Column(name = "name")
     public String name;
 
-    @OneToMany(mappedBy = "movieHasTag", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "tagEntity", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     public Set<MovieHasTagEntity> movieHasTagEntities = new HashSet<>();
 
     public void addMovieHasTagEntities(MovieHasTagEntity movieHasTag) {
