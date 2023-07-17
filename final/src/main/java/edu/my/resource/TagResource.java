@@ -8,6 +8,11 @@ import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.media.Content;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+import org.eclipse.microprofile.openapi.annotations.parameters.Parameter;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 
 @Path("/tags")
 @Produces(MediaType.APPLICATION_JSON)
@@ -17,19 +22,45 @@ public class TagResource {
     TagControllerService tagControllerService;
 
     @GET
+    @Operation(summary = "Get list of tags", description = "Shows all available tags")
+    @APIResponse(
+            responseCode = "200",
+            description = "List of all tags",
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = TagDTO.class))
+    )
     public Response getAll() {
         return Response.ok(tagControllerService.getAll()).build();
     }
 
     @GET
     @Path("/{id}")
-    public Response getById(@PathParam("id") Long id) {
+    @Operation(summary = "Get tag by id", description = "Available tag")
+    @APIResponse(
+            responseCode = "200",
+            description = "Selected tag",
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = TagDTO.class))
+    )
+    public Response getById(
+            @Parameter(description = "The ID that needs to be fetched", required = true)
+            @PathParam("id")
+            Long id
+    ) {
         return Response.ok(tagControllerService.getById(id)).build();
     }
 
     @POST
     @Transactional
-    public Response add(@Valid TagDTO tagDTO) {
+    @Operation(summary = "Add not existing tag", description = "Adds new tag")
+    @APIResponse(
+            responseCode = "201",
+            description = "Tag is added",
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = TagDTO.class))
+    )
+    public Response add(
+            @Parameter(description = "Tag to be added", required = true)
+            @Valid
+            TagDTO tagDTO
+    ) {
         tagControllerService.add(tagDTO);
         return Response.status(Response.Status.CREATED).entity(tagControllerService.getAll()).build();
     }
@@ -37,7 +68,17 @@ public class TagResource {
     @DELETE
     @Transactional
     @Path("/{id}")
-    public Response deleteById(@PathParam("id") Long id) {
+    @Operation(summary = "Delete available tag", description = "Deletes the tag")
+    @APIResponse(
+            responseCode = "204",
+            description = "Tag is deleted",
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = TagDTO.class))
+    )
+    public Response deleteById(
+            @Parameter(description = "The tag's id that needs to be deleted", required = true)
+            @PathParam("id")
+            Long id
+    ) {
         tagControllerService.deleteById(id);
         return Response.noContent().build();
     }
@@ -45,7 +86,20 @@ public class TagResource {
     @PUT
     @Transactional
     @Path("/{id}")
-    public Response update(@PathParam("id") Long id, @Valid TagDTO tagDTO) {
+    @Operation(summary = "Update available tag", description = "Updates the tag")
+    @APIResponse(
+            responseCode = "200",
+            description = "Tag is updated",
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = TagDTO.class))
+    )
+    public Response update(
+            @Parameter(description = "The ID that needs to find tag to be updated", required = true)
+            @PathParam("id")
+            Long id,
+            @Parameter(description = "Tag with data to update", required = true)
+            @Valid
+            TagDTO tagDTO
+    ) {
         tagControllerService.update(id, tagDTO);
         return Response.ok(tagControllerService.getById(id)).build();
     }

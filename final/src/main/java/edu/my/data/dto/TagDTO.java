@@ -13,7 +13,7 @@ public class TagDTO {
     @Schema(title = "Tag description", required = true)
     public String name;
 
-    @Schema(title = "Link of the tag with the films that include it", required = false)
+    @Schema(title = "Link of the tag with the films that include it", required = false, hidden = true)
     @JsonIgnore
     public Set<MovieHasTagDTO> tagHasMovieSet;
 }

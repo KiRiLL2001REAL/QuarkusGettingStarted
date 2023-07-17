@@ -35,6 +35,6 @@ public class MovieDTO {
     public Integer releaseYear;
 
     @JsonIgnore
-    @Schema(title = "Link to the movie's tags", required = false)
+    @Schema(title = "Link to the movie's tags", required = false, hidden = true)
     public Set<MovieHasTagDTO> movieHasTagSet;
 }
