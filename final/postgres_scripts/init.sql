@@ -1,10 +1,3 @@
-CREATE TABLE IF NOT EXISTS public.hall (
-  id BIGINT NOT NULL GENERATED ALWAYS AS IDENTITY (START 1 INCREMENT 1) PRIMARY KEY,
-  name CHARACTER VARYING(64) NOT NULL,
-  count_rows INTEGER NOT NULL CHECK (count_rows > 0),
-  row_capacity INTEGER NOT NULL CHECK (row_capacity > 0)
-);
-
 CREATE TABLE IF NOT EXISTS public.movie (
   id BIGINT NOT NULL GENERATED ALWAYS AS IDENTITY (START 1 INCREMENT 1) PRIMARY KEY,
   name CHARACTER VARYING(64) NOT NULL,
@@ -26,21 +19,6 @@ CREATE TABLE IF NOT EXISTS public.movie_has_tag (
   id BIGINT NOT NULL GENERATED ALWAYS AS IDENTITY (START 1 INCREMENT 1) PRIMARY KEY,
   id_movie BIGINT NOT NULL REFERENCES movie (id),
   id_tag BIGINT NOT NULL REFERENCES tag (id)
-);
-
-CREATE TABLE IF NOT EXISTS public.screening (
-  id BIGINT NOT NULL GENERATED ALWAYS AS IDENTITY (START 1 INCREMENT 1) PRIMARY KEY,
-  id_hall BIGINT NOT NULL REFERENCES hall (id),
-  id_movie BIGINT NOT NULL REFERENCES movie (id),
-  showing_time TIME WITHOUT TIME ZONE NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS public.ticket (
-  id BIGINT NOT NULL GENERATED ALWAYS AS IDENTITY (START 1 INCREMENT 1) PRIMARY KEY,
-  id_screening BIGINT NOT NULL REFERENCES screening (id),
-  row INTEGER NOT NULL CHECK (row > 0),
-  seat INTEGER NOT NULL CHECK (seat > 0),
-  cost FLOAT NOT NULL CHECK (cost >= 0.0)
 );
 
 
@@ -249,25 +227,3 @@ VALUES
 	(29, 10,  7);
 
 ALTER SEQUENCE movie_has_tag_id_seq RESTART WITH 30;
-
-
-INSERT INTO hall (id, name, count_rows, row_capacity) OVERRIDING SYSTEM VALUE
-VALUES
-(
-    1,
-    'Малый зал',
-    10,
-    15
-), (
-    2,
-    'Средний зал',
-    12,
-    18
-), (
-    3,
-    'Большой зал',
-    15,
-    22
-);
-
-ALTER SEQUENCE hall_id_seq RESTART WITH 4;
