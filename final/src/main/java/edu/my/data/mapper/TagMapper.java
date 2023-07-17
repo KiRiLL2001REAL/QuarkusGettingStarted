@@ -4,13 +4,15 @@ import edu.my.data.dto.TagDTO;
 import edu.my.data.entity.TagEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.mapstruct.ReportingPolicy;
 
 import java.util.List;
 import java.util.Set;
 
 @Mapper(
         componentModel = "jakarta",
-        nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE
+        nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
+        unmappedTargetPolicy = ReportingPolicy.IGNORE
 )
 public interface TagMapper {
     TagDTO toDTO(TagEntity tagEntity);

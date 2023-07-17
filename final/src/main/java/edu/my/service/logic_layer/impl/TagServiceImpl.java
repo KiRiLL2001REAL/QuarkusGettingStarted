@@ -1,7 +1,8 @@
 package edu.my.service.logic_layer.impl;
 
+import edu.my.data.entity.MovieHasTagEntity;
 import edu.my.data.entity.TagEntity;
-import edu.my.data.repository.TagRepo;
+import edu.my.data.repository.TagRepository;
 import edu.my.service.logic_layer.TagService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -12,7 +13,7 @@ import java.util.List;
 @ApplicationScoped
 public class TagServiceImpl implements TagService {
     @Inject
-    TagRepo tagRepository;
+    TagRepository tagRepository;
 
     @Override
     public void add(TagEntity tagEntity) {

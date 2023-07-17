@@ -18,10 +18,15 @@ public class TagEntity extends PanacheEntityBase {
     public String name;
 
     @OneToMany(mappedBy = "tagEntity", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    public Set<MovieHasTagEntity> movieHasTagEntities = new HashSet<>();
+    public Set<MovieHasTagEntity> links = new HashSet<>();
 
-    public void addMovieHasTagEntities(MovieHasTagEntity movieHasTag) {
+    public void addLink(MovieHasTagEntity movieHasTag) {
+        this.links.add(movieHasTag);
         movieHasTag.tagEntity = this;
-        this.movieHasTagEntities.add(movieHasTag);
+    }
+
+    public void removeLink(MovieHasTagEntity movieHasTag) {
+        this.links.remove(movieHasTag);
+        movieHasTag.movieEntity = null;
     }
 }

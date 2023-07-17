@@ -1,10 +1,7 @@
 package edu.my.service.controller_layer.impl;
 
 import edu.my.data.dto.TagDTO;
-import edu.my.data.entity.TagEntity;
-import edu.my.data.mapper.MovieHasTagMapper;
 import edu.my.data.mapper.TagMapper;
-import edu.my.data.repository.TagRepo;
 import edu.my.service.controller_layer.TagControllerService;
 import edu.my.service.logic_layer.TagService;
 import jakarta.enterprise.context.ApplicationScoped;
