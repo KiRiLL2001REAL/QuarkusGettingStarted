@@ -70,7 +70,6 @@ public class MovieResource {
     @Counted(name = "performedAddMovie", description = "How many movies has been added")
     @Timed(name = "getAddMovieTimer", description = "A measure of how long it takes to add movie", unit = MetricUnits.MILLISECONDS)
     public Response add(
-            @Parameter(description = "Movie to be added", required = true)
             @Valid
             MovieDTO movieDTO
     ) {
@@ -112,7 +111,6 @@ public class MovieResource {
             @Parameter(description = "The ID that needs to find movie to be updated", required = true)
             @PathParam("id")
             Long id,
-            @Parameter(description = "Movie with data to update", required = true)
             @Valid
             MovieDTO movieDTO
     ) {
@@ -154,7 +152,6 @@ public class MovieResource {
             @Parameter(description = "The movie ID to attach tag", required = true)
             @QueryParam("movie_id")
             Long id,
-            @Parameter(description = "Tag to be attached", required = true)
             @Valid
             TagDTO tagDTO
     ) {
@@ -177,7 +174,6 @@ public class MovieResource {
             @Parameter(description = "The movie ID to attach tag", required = true)
             @QueryParam("movie_id")
             Long id,
-            @Parameter(description = "Tags to be attached", required = true)
             Set<@Valid TagDTO> tagDTOSet
     ) throws SystemException {
         movieControllerService.attachTags(id, tagDTOSet);
@@ -199,7 +195,6 @@ public class MovieResource {
             @Parameter(description = "The movie ID to detach tag", required = true)
             @QueryParam("movie_id")
             Long id,
-            @Parameter(description = "Tag to be detached", required = true)
             @Valid
             TagDTO tagDTO) {
         movieControllerService.detachTag(id, tagDTO);

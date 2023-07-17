@@ -66,7 +66,6 @@ public class TagResource {
     @Counted(name = "performedAddTag", description = "How many tags has been added")
     @Timed(name = "getAddTagTimer", description = "A measure of how long it takes to add tag", unit = MetricUnits.MILLISECONDS)
     public Response add(
-            @Parameter(description = "Tag to be added", required = true)
             @Valid
             TagDTO tagDTO
     ) {
@@ -108,7 +107,6 @@ public class TagResource {
             @Parameter(description = "The ID that needs to find tag to be updated", required = true)
             @PathParam("id")
             Long id,
-            @Parameter(description = "Tag with data to update", required = true)
             @Valid
             TagDTO tagDTO
     ) {
