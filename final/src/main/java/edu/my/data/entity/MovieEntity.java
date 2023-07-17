@@ -14,25 +14,25 @@ public class MovieEntity extends PanacheEntityBase {
     @Column(name = "id")
     public Long id;
 
-    @Column(name = "name")
+    @Column(name = "name", length = 64)
     public String name;
 
-    @Column(name = "description")
+    @Column(name = "description", length = 1024)
     public String description;
 
-    @Column(name = "reasons_to_view")
+    @Column(name = "reasons_to_view", length = 3072)
     public String reasonsToView;
 
-    @Column(name = "facts")
+    @Column(name = "facts", length = 3072)
     public String facts;
 
     @Column(name = "duration")
     public Integer durationInSeconds;
 
-    @Column(name = "distributor")
+    @Column(name = "distributor", length = 32)
     public String distributor;
 
-    @Column(name = "country")
+    @Column(name = "country", length = 32)
     public String country;
 
     @Column(name = "release_year")

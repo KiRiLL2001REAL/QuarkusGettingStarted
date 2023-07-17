@@ -14,7 +14,7 @@ public class TagEntity extends PanacheEntityBase {
     @Column(name = "id")
     public Long id;
 
-    @Column(name = "name")
+    @Column(name = "name", length = 64)
     public String name;
 
     @OneToMany(mappedBy = "tagEntity", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
