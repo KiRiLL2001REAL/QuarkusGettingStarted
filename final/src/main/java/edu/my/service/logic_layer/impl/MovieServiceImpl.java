@@ -5,7 +5,7 @@ import edu.my.data.entity.MovieHasTagEntity;
 import edu.my.data.entity.TagEntity;
 import edu.my.data.repository.MovieHasTagRepository;
 import edu.my.data.repository.MovieRepository;
-import edu.my.data.repository.TagRepository;
+import edu.my.exception.EntityIsNotFoundException;
 import edu.my.exception.TagIsAlreadyBoundException;
 import edu.my.service.logic_layer.MovieService;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -13,7 +13,6 @@ import jakarta.inject.Inject;
 import jakarta.transaction.SystemException;
 import jakarta.transaction.TransactionManager;
 import jakarta.transaction.Transactional;
-import jakarta.ws.rs.NotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +36,7 @@ public class MovieServiceImpl implements MovieService {
     public List<MovieEntity> getAll() {
         List<MovieEntity> movieList = movieRepository.findAll().list();
         if (movieList.isEmpty())
-            throw new NotFoundException("Can't find any movies in DB.");
+            throw new EntityIsNotFoundException("Can't find any movies in DB.");
         return movieList;
     }
 
@@ -45,7 +44,7 @@ public class MovieServiceImpl implements MovieService {
     public MovieEntity getById(Long id) {
         MovieEntity notNullMovie = movieRepository.findById(id);
         if (notNullMovie == null)
-            throw new NotFoundException("Can't find movie with id=" + id + ".");
+            throw new EntityIsNotFoundException("Can't find movie with id=" + id + ".");
         return notNullMovie;
     }
 
@@ -53,7 +52,7 @@ public class MovieServiceImpl implements MovieService {
     public void update(Long id, MovieEntity movieEntity) {
         MovieEntity notNullMovie = movieRepository.findById(id);
         if (notNullMovie == null)
-            throw new NotFoundException("Can't find movie with id=" + id + ". Nothing to update.");
+            throw new EntityIsNotFoundException("Can't find movie with id=" + id + ". Nothing to update.");
         notNullMovie.name = movieEntity.name;
         notNullMovie.description = movieEntity.description;
         notNullMovie.reasonsToView = movieEntity.reasonsToView;
@@ -68,7 +67,7 @@ public class MovieServiceImpl implements MovieService {
     public void deleteById(Long id) {
         MovieEntity notNullMovie = movieRepository.findById(id);
         if (notNullMovie == null)
-            throw new NotFoundException("Can't find movie with id=" + id + ". Nothing to delete.");
+            throw new EntityIsNotFoundException("Can't find movie with id=" + id + ". Nothing to delete.");
         movieRepository.deleteById(id);
     }
 
@@ -76,7 +75,7 @@ public class MovieServiceImpl implements MovieService {
     public List<TagEntity> getAttachedTags(Long id) {
         MovieEntity notNullMovie = movieRepository.findById(id);
         if (notNullMovie == null)
-            throw new NotFoundException("Can't find movie with id=" + id + ".");
+            throw new EntityIsNotFoundException("Can't find movie with id=" + id + ".");
 
         List<MovieHasTagEntity> linkList = movieHasTagRepository.find("movieEntity = ?1", notNullMovie).list();
         List<TagEntity> tagList = new ArrayList<>();
@@ -89,7 +88,7 @@ public class MovieServiceImpl implements MovieService {
     public void attachTag(Long id, TagEntity tagEntity) {
         MovieEntity notNullMovie = movieRepository.findById(id);
         if (notNullMovie == null)
-            throw new NotFoundException("Can't find movie with id=" + id + ". Nothing to attach to.");
+            throw new EntityIsNotFoundException("Can't find movie with id=" + id + ". Nothing to attach to.");
 
         MovieHasTagEntity mustBeNullLink = movieHasTagRepository.find("movieEntity = ?1 AND tagEntity = ?2", notNullMovie, tagEntity).firstResult();
         if (mustBeNullLink != null)
@@ -110,7 +109,7 @@ public class MovieServiceImpl implements MovieService {
         try {
             for (TagEntity tag : tagEntitySet)
                 attachTag(id, tag);
-        } catch (NotFoundException | TagIsAlreadyBoundException e) {
+        } catch (EntityIsNotFoundException | TagIsAlreadyBoundException e) {
             transactionManager.setRollbackOnly();
             throw e;
         }
@@ -120,11 +119,11 @@ public class MovieServiceImpl implements MovieService {
     public void detachTag(Long id, TagEntity tagEntity) {
         MovieEntity notNullMovie = movieRepository.findById(id);
         if (notNullMovie == null)
-            throw new NotFoundException("Can't find movie with id=" + id + ".");
+            throw new EntityIsNotFoundException("Can't find movie with id=" + id + ".");
 
         MovieHasTagEntity notNullLink = movieHasTagRepository.find("movieEntity = ?1 AND tagEntity = ?2", notNullMovie, tagEntity).firstResult();
         if (notNullLink == null)
-            throw new NotFoundException("Can't find link with movieId=" + id + " and tagId=" + tagEntity.id + ". Nothing to detach.");
+            throw new EntityIsNotFoundException("Can't find link with movieId=" + id + " and tagId=" + tagEntity.id + ". Nothing to detach.");
 
         notNullMovie.removeLink(notNullLink);
         tagEntity.removeLink(notNullLink);
@@ -137,12 +136,12 @@ public class MovieServiceImpl implements MovieService {
         try {
             MovieEntity notNullMovie = movieRepository.findById(id);
             if (notNullMovie == null)
-                throw new NotFoundException("Can't find movie with id=" + id + ".");
+                throw new EntityIsNotFoundException("Can't find movie with id=" + id + ".");
 
             List<MovieHasTagEntity> linksToDetach = movieHasTagRepository.find("movieEntity = ?1", notNullMovie).list();
             for (MovieHasTagEntity link : linksToDetach)
                 detachTag(id, link.tagEntity);
-        } catch (NotFoundException e) {
+        } catch (EntityIsNotFoundException e) {
             transactionManager.setRollbackOnly();
             throw e;
         }
