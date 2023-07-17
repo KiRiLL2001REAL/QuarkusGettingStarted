@@ -10,6 +10,9 @@ import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import org.eclipse.microprofile.metrics.MetricUnits;
+import org.eclipse.microprofile.metrics.annotation.Counted;
+import org.eclipse.microprofile.metrics.annotation.Timed;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
@@ -32,6 +35,8 @@ public class MovieResource {
             description = "List of all movies",
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = MovieDTO.class))
     )
+    @Counted(name = "performedGetAllMovies", description = "How many requests were made for getting list of movies")
+    @Timed(name = "getAllMoviesTimer", description = "A measure of how long it takes to get a list of movies", unit = MetricUnits.MILLISECONDS)
     public Response getAll() {
         return Response.ok(movieControllerService.getAll()).build();
     }
@@ -44,6 +49,8 @@ public class MovieResource {
             description = "Selected movie",
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = MovieDTO.class))
     )
+    @Counted(name = "performedGetByIdMovie", description = "How many requests were made for getting specific movie")
+    @Timed(name = "getByIdMovieTimer", description = "A measure of how long it takes to get specific movie", unit = MetricUnits.MILLISECONDS)
     public Response getById(
             @Parameter(description = "The ID that needs to be fetched", required = true)
             @PathParam("id")
@@ -60,6 +67,8 @@ public class MovieResource {
             description = "Movie is added",
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = MovieDTO.class))
     )
+    @Counted(name = "performedAddMovie", description = "How many movies has been added")
+    @Timed(name = "getAddMovieTimer", description = "A measure of how long it takes to add movie", unit = MetricUnits.MILLISECONDS)
     public Response add(
             @Parameter(description = "Movie to be added", required = true)
             @Valid
@@ -77,6 +86,8 @@ public class MovieResource {
             responseCode = "204",
             description = "Movie is deleted"
     )
+    @Counted(name = "performedDeleteByIdMovie", description = "How many movies has been deleted")
+    @Timed(name = "getDeleteByIdMovieTimer", description = "A measure of how long it takes to delete movie", unit = MetricUnits.MILLISECONDS)
     public Response deleteById(
             @Parameter(description = "The movie's id that needs to be deleted", required = true)
             @PathParam("id")
@@ -95,6 +106,8 @@ public class MovieResource {
             description = "Movie is updated",
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = MovieDTO.class))
     )
+    @Counted(name = "performedUpdateMovie", description = "How many movies has been updated")
+    @Timed(name = "getUpdateMovieTimer", description = "A measure of how long it takes to update movie", unit = MetricUnits.MILLISECONDS)
     public Response update(
             @Parameter(description = "The ID that needs to find movie to be updated", required = true)
             @PathParam("id")
@@ -116,6 +129,8 @@ public class MovieResource {
             description = "List of attached tags",
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = TagDTO.class))
     )
+    @Counted(name = "performedGetAllMovieTags", description = "How many requests were made for getting list of movie tags")
+    @Timed(name = "getAllMovieTagsTimer", description = "A measure of how long it takes to get a list of movie tags", unit = MetricUnits.MILLISECONDS)
     public Response getAllTags(
             @Parameter(description = "The ID to get the associated tags", required = true)
             @PathParam("id")
@@ -133,6 +148,8 @@ public class MovieResource {
             description = "List of attached tags",
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = TagDTO.class))
     )
+    @Counted(name = "performedAttachMovieTag", description = "How many tags has been added to movies")
+    @Timed(name = "getAttachMovieTagTimer", description = "A measure of how long it takes to add tag to movie", unit = MetricUnits.MILLISECONDS)
     public Response attachTag(
             @Parameter(description = "The movie ID to attach tag", required = true)
             @QueryParam("movie_id")
@@ -154,6 +171,8 @@ public class MovieResource {
             description = "List of attached tags",
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = TagDTO.class))
     )
+    @Counted(name = "performedAttachMovieMultipleTags", description = "How many multiple attaches of tags has been performed to movies")
+    @Timed(name = "getAttachMovieMultipleTagsTimer", description = "A measure of how long it takes to add multiple tags to movie", unit = MetricUnits.MILLISECONDS)
     public Response attachTags(
             @Parameter(description = "The movie ID to attach tag", required = true)
             @QueryParam("movie_id")
@@ -174,6 +193,8 @@ public class MovieResource {
             description = "Tag is detached",
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = MovieDTO.class))
     )
+    @Counted(name = "performedDetachMovieTag", description = "How many tags has been detached from movies")
+    @Timed(name = "getDetachMovieTagTimer", description = "A measure of how long it takes to detach tag from movie", unit = MetricUnits.MILLISECONDS)
     public Response detachTag(
             @Parameter(description = "The movie ID to detach tag", required = true)
             @QueryParam("movie_id")
@@ -193,6 +214,8 @@ public class MovieResource {
             responseCode = "204",
             description = "All tags are detached"
     )
+    @Counted(name = "performedDetachMovieAllTags", description = "How many times all tags has been detached from movies")
+    @Timed(name = "getDetachMovieAllTagsTimer", description = "A measure of how long it takes to detach all tags from movie", unit = MetricUnits.MILLISECONDS)
     public Response detachAllTags(
             @Parameter(description = "The movie ID to detach tags", required = true)
             @QueryParam("movie_id")
