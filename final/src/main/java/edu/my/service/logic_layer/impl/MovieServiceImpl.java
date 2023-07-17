@@ -68,6 +68,13 @@ public class MovieServiceImpl implements MovieService {
         MovieEntity notNullMovie = movieRepository.findById(id);
         if (notNullMovie == null)
             throw new EntityIsNotFoundException("Can't find movie with id=" + id + ". Nothing to delete.");
+
+        for (MovieHasTagEntity link : notNullMovie.links) {
+            link.tagEntity.links.remove(link);
+            movieHasTagRepository.delete(link);
+        }
+        notNullMovie.links = null;
+
         movieRepository.deleteById(id);
     }
 

@@ -1,11 +1,14 @@
 package edu.my.service.logic_layer.impl;
 
+import edu.my.data.entity.MovieHasTagEntity;
 import edu.my.data.entity.TagEntity;
+import edu.my.data.repository.MovieHasTagRepository;
 import edu.my.data.repository.TagRepository;
 import edu.my.exception.EntityIsNotFoundException;
 import edu.my.service.logic_layer.TagService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 
 import java.util.List;
 
@@ -13,6 +16,8 @@ import java.util.List;
 public class TagServiceImpl implements TagService {
     @Inject
     TagRepository tagRepository;
+    @Inject
+    MovieHasTagRepository movieHasTagRepository;
 
     @Override
     public void add(TagEntity tagEntity) {
@@ -48,6 +53,13 @@ public class TagServiceImpl implements TagService {
         TagEntity notNullTag = tagRepository.findById(id);
         if (notNullTag == null)
             throw new EntityIsNotFoundException("Can't find tag with id=" + id + ". Nothing to delete.");
+
+        for (MovieHasTagEntity link : notNullTag.links) {
+            link.movieEntity.links.remove(link);
+            movieHasTagRepository.delete(link);
+        }
+        notNullTag.links = null;
+
         tagRepository.deleteById(id);
     }
 }
