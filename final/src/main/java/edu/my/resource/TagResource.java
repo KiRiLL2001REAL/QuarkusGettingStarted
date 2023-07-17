@@ -34,7 +34,7 @@ public class TagResource {
 
     @GET
     @Path("/{id}")
-    @Operation(summary = "Get tag by id", description = "Available tag")
+    @Operation(summary = "Get tag by ID", description = "Shows available tag")
     @APIResponse(
             responseCode = "200",
             description = "Selected tag",
@@ -68,11 +68,10 @@ public class TagResource {
     @DELETE
     @Transactional
     @Path("/{id}")
-    @Operation(summary = "Delete available tag", description = "Deletes the tag")
+    @Operation(summary = "Delete existing tag", description = "Deletes the tag")
     @APIResponse(
             responseCode = "204",
-            description = "Tag is deleted",
-            content = @Content(mediaType = "application/json", schema = @Schema(implementation = TagDTO.class))
+            description = "Tag is deleted"
     )
     public Response deleteById(
             @Parameter(description = "The tag's id that needs to be deleted", required = true)
