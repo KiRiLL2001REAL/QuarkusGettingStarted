@@ -15,5 +15,5 @@ public class TagDTO {
 
     @Schema(title = "Link of the tag with the films that include it", required = false)
     @JsonIgnore
-    Set<MovieHasTagDTO> tagHasMovieSet;
+    public Set<MovieHasTagDTO> tagHasMovieSet;
 }
