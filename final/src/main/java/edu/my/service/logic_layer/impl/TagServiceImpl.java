@@ -41,11 +41,14 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public void update(Long id, TagEntity tagEntity) {
+    public void update(Long id, TagEntity tagData) {
         TagEntity notNullTag = tagRepository.findById(id);
         if (notNullTag == null)
             throw new EntityIsNotFoundException("Can't find tag with id=" + id + ". Nothing to update.");
-        notNullTag.name = tagEntity.name;
+
+        notNullTag.name = tagData.name;
+
+        tagRepository.persist(notNullTag);
     }
 
     @Override

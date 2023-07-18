@@ -11,7 +11,7 @@ public interface MovieService {
     void add(MovieEntity movieEntity);
     List<MovieEntity> getAll();
     MovieEntity getById(Long id);
-    void update(Long id, MovieEntity movieEntity);
+    void update(Long id, MovieEntity movieData);
     void deleteById(Long id);
 
     List<TagEntity> getAttachedTags(Long id);

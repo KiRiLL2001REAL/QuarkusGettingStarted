@@ -49,18 +49,21 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public void update(Long id, MovieEntity movieEntity) {
+    public void update(Long id, MovieEntity movieData) {
         MovieEntity notNullMovie = movieRepository.findById(id);
         if (notNullMovie == null)
             throw new EntityIsNotFoundException("Can't find movie with id=" + id + ". Nothing to update.");
-        notNullMovie.name = movieEntity.name;
-        notNullMovie.description = movieEntity.description;
-        notNullMovie.reasonsToView = movieEntity.reasonsToView;
-        notNullMovie.facts = movieEntity.facts;
-        notNullMovie.durationInSeconds = movieEntity.durationInSeconds;
-        notNullMovie.distributor = movieEntity.distributor;
-        notNullMovie.country = movieEntity.country;
-        notNullMovie.releaseYear = movieEntity.releaseYear;
+
+        notNullMovie.name = movieData.name;
+        notNullMovie.description = movieData.description;
+        notNullMovie.reasonsToView = movieData.reasonsToView;
+        notNullMovie.facts = movieData.facts;
+        notNullMovie.durationInSeconds = movieData.durationInSeconds;
+        notNullMovie.distributor = movieData.distributor;
+        notNullMovie.country = movieData.country;
+        notNullMovie.releaseYear = movieData.releaseYear;
+        
+        movieRepository.persist(notNullMovie);
     }
 
     @Override
