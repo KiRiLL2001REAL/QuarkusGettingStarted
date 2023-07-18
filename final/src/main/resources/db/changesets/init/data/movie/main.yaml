@@ -1,0 +1,11 @@
+databaseChangeLog:
+#  - changeSet:
+#      id: init-table-movie
+#      author: Baturin K.A.
+#      changes:
+#        - insert:
+#            schemaName: public
+#            tableName: movie
+#            dbms: "postgresql"
+#            columns:
+

@@ -107,7 +107,11 @@
       <version>${lombok.version}</version>
       <scope>compile</scope>
     </dependency>
-
+    <!-- Liquibase specific dependencies -->
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-liquibase</artifactId>
+    </dependency>
 
   </dependencies>
   <build>

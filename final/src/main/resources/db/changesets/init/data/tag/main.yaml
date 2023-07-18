@@ -1,0 +1,5 @@
+databaseChangeLog:
+#  - changeSet:
+#      id: init-table-tag
+#      author: Baturin K.A.
+#      changes:

@@ -1,0 +1,65 @@
+databaseChangeLog:
+  - changeSet:
+      id: init-table-movie
+      author: Baturin K.A.
+      changes:
+        - createTable:
+            tableName: movie
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  remarks: Идентификатор фильма (первичный ключ)
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: CHARACTER VARYING(64)
+                  remarks: Название фильма
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: CHARACTER VARYING(1024)
+                  remarks: Описание фильма
+                  constraints:
+                    nullable: false
+              - column:
+                  name: reasons_to_view
+                  type: CHARACTER VARYING(3072)
+                  remarks: Причины, по которым стоит посмотреть фильм
+                  constraints:
+                    nullable: false
+              - column:
+                  name: facts
+                  type: CHARACTER VARYING(3072)
+                  remarks: Интересные факты о фильме
+                  constraints:
+                    nullable: false
+              - column:
+                  name: duration
+                  type: INTEGER
+                  remarks: Длительность фильма (в секундах)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: distributor
+                  type: CHARACTER VARYING(32)
+                  remarks: Наименование прокатчика
+                  constraints:
+                    nullable: true
+                  defaultValue: null
+              - column:
+                  name: country
+                  type: CHARACTER VARYING(32)
+                  remarks: Страна-производитель фильма
+                  constraints:
+                    nullable: false
+              - column:
+                  name: release_year
+                  type: INTEGER
+                  remarks: Год выпуска фильма
+                  constraints:
+                    nullable: false

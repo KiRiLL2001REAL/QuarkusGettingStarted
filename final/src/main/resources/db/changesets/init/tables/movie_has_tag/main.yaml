@@ -1,0 +1,28 @@
+databaseChangeLog:
+  - changeSet:
+      id: init-table-movie_has_tag
+      author: Baturin K.A.
+      changes:
+        - createTable:
+            tableName: movie_has_tag
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  remarks: Идентификатор связи фильма с тегом (первичный ключ)
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: id_movie
+                  type: BIGINT
+                  remarks: Идентификатор фильма (внешний ключ)
+                  constraints:
+                    references: movie(id)
+              - column:
+                  name: id_tag
+                  type: BIGINT
+                  remarks: Идентификатор тега (внешний ключ)
+                  constraints:
+                    references: tag(id)

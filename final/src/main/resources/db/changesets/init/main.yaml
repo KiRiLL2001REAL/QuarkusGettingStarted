@@ -1,0 +1,10 @@
+databaseChangeLog:
+  - include:
+      file: tables/movie/main.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: tables/tag/main.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: tables/movie_has_tag/main.yaml
+      relativeToChangelogFile: true

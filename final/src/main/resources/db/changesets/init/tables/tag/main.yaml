@@ -1,0 +1,22 @@
+databaseChangeLog:
+  - changeSet:
+      id: init-table-tag
+      author: Baturin K.A.
+      changes:
+        - createTable:
+            tableName: tag
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  remarks: Идентификатор тэга (первичный ключ)
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(64)
+                  remarks: Название продукта
+                  constraints:
+                    nullable: false
