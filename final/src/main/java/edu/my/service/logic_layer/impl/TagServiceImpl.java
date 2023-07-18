@@ -8,7 +8,6 @@ import edu.my.exception.EntityIsNotFoundException;
 import edu.my.service.logic_layer.TagService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import jakarta.transaction.Transactional;
 
 import java.util.List;
 
@@ -46,7 +45,7 @@ public class TagServiceImpl implements TagService {
         if (notNullTag == null)
             throw new EntityIsNotFoundException("Can't find tag with id=" + id + ". Nothing to update.");
 
-        notNullTag.name = tagData.name;
+        notNullTag.setName(tagData.getName());
 
         tagRepository.persist(notNullTag);
     }
@@ -57,11 +56,11 @@ public class TagServiceImpl implements TagService {
         if (notNullTag == null)
             throw new EntityIsNotFoundException("Can't find tag with id=" + id + ". Nothing to delete.");
 
-        for (MovieHasTagEntity link : notNullTag.links) {
-            link.movieEntity.links.remove(link);
+        for (MovieHasTagEntity link : notNullTag.getLinks()) {
+            link.getMovieEntity().getLinks().remove(link);
             movieHasTagRepository.delete(link);
         }
-        notNullTag.links = null;
+        notNullTag.setLinks(null);
 
         tagRepository.deleteById(id);
     }

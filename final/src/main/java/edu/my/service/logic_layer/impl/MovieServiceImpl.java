@@ -16,7 +16,6 @@ import jakarta.transaction.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @ApplicationScoped
 public class MovieServiceImpl implements MovieService {
@@ -54,14 +53,14 @@ public class MovieServiceImpl implements MovieService {
         if (notNullMovie == null)
             throw new EntityIsNotFoundException("Can't find movie with id=" + id + ". Nothing to update.");
 
-        notNullMovie.name = movieData.name;
-        notNullMovie.description = movieData.description;
-        notNullMovie.reasonsToView = movieData.reasonsToView;
-        notNullMovie.facts = movieData.facts;
-        notNullMovie.durationInSeconds = movieData.durationInSeconds;
-        notNullMovie.distributor = movieData.distributor;
-        notNullMovie.country = movieData.country;
-        notNullMovie.releaseYear = movieData.releaseYear;
+        notNullMovie.setName(movieData.getName());
+        notNullMovie.setDescription(movieData.getDescription());
+        notNullMovie.setReasonsToView(movieData.getReasonsToView());
+        notNullMovie.setFacts(movieData.getFacts());
+        notNullMovie.setDurationInSeconds(movieData.getDurationInSeconds());
+        notNullMovie.setDistributor(movieData.getDistributor());
+        notNullMovie.setCountry(movieData.getCountry());
+        notNullMovie.setReleaseYear(movieData.getReleaseYear());
 
         movieRepository.persist(notNullMovie);
     }
@@ -72,11 +71,11 @@ public class MovieServiceImpl implements MovieService {
         if (notNullMovie == null)
             throw new EntityIsNotFoundException("Can't find movie with id=" + id + ". Nothing to delete.");
 
-        for (MovieHasTagEntity link : notNullMovie.links) {
-            link.tagEntity.links.remove(link);
+        for (MovieHasTagEntity link : notNullMovie.getLinks()) {
+            link.getTagEntity().getLinks().remove(link);
             movieHasTagRepository.delete(link);
         }
-        notNullMovie.links = null;
+        notNullMovie.setLinks(null);
 
         movieRepository.deleteById(id);
     }
@@ -90,7 +89,8 @@ public class MovieServiceImpl implements MovieService {
         List<MovieHasTagEntity> linkList = movieHasTagRepository.find("movieEntity = ?1", notNullMovie).list();
         List<TagEntity> tagList = new ArrayList<>();
         for (MovieHasTagEntity link : linkList)
-            tagList.add(link.tagEntity);
+            tagList.add(link.getTagEntity());
+
         return tagList;
     }
 
@@ -102,11 +102,11 @@ public class MovieServiceImpl implements MovieService {
 
         MovieHasTagEntity mustBeNullLink = movieHasTagRepository.find("movieEntity = ?1 AND tagEntity = ?2", notNullMovie, tagEntity).firstResult();
         if (mustBeNullLink != null)
-            throw new TagIsAlreadyBoundException("Tag '" + mustBeNullLink.tagEntity.name + "' is already bound to movie '" + notNullMovie.name + "'.");
+            throw new TagIsAlreadyBoundException("Tag '" + mustBeNullLink.getTagEntity().getName() + "' is already bound to movie '" + notNullMovie.getName() + "'.");
 
         MovieHasTagEntity link = new MovieHasTagEntity();
-        link.movieEntity = notNullMovie;
-        link.tagEntity = tagEntity;
+        link.setMovieEntity(notNullMovie);
+        link.setTagEntity(tagEntity);
         movieHasTagRepository.persist(link);
 
         notNullMovie.addLink(link);
@@ -133,7 +133,7 @@ public class MovieServiceImpl implements MovieService {
 
         MovieHasTagEntity notNullLink = movieHasTagRepository.find("movieEntity = ?1 AND tagEntity = ?2", notNullMovie, tagEntity).firstResult();
         if (notNullLink == null)
-            throw new EntityIsNotFoundException("Can't find link with movieId=" + id + " and tagId=" + tagEntity.id + ". Nothing to detach.");
+            throw new EntityIsNotFoundException("Can't find link with movieId=" + id + " and tagId=" + tagEntity.getId() + ". Nothing to detach.");
 
         notNullMovie.removeLink(notNullLink);
         tagEntity.removeLink(notNullLink);
@@ -150,7 +150,7 @@ public class MovieServiceImpl implements MovieService {
 
             List<MovieHasTagEntity> linksToDetach = movieHasTagRepository.find("movieEntity = ?1", notNullMovie).list();
             for (MovieHasTagEntity link : linksToDetach)
-                detachTag(id, link.tagEntity);
+                detachTag(id, link.getTagEntity());
         } catch (EntityIsNotFoundException e) {
             transactionManager.setRollbackOnly();
             throw e;

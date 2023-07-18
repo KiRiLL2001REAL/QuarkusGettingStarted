@@ -11,7 +11,6 @@ import jakarta.inject.Inject;
 import jakarta.transaction.SystemException;
 
 import java.util.List;
-import java.util.Set;
 
 @ApplicationScoped
 public class MovieControllerServiceImpl implements MovieControllerService {
