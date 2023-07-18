@@ -62,7 +62,7 @@ public class MovieServiceImpl implements MovieService {
         notNullMovie.distributor = movieData.distributor;
         notNullMovie.country = movieData.country;
         notNullMovie.releaseYear = movieData.releaseYear;
-        
+
         movieRepository.persist(notNullMovie);
     }
 
@@ -115,9 +115,9 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     @Transactional
-    public void attachTags(Long id, Set<TagEntity> tagEntitySet) throws SystemException {
+    public void attachTags(Long id, List<TagEntity> tagEntityList) throws SystemException {
         try {
-            for (TagEntity tag : tagEntitySet)
+            for (TagEntity tag : tagEntityList)
                 attachTag(id, tag);
         } catch (EntityIsNotFoundException | TagIsAlreadyBoundException e) {
             transactionManager.setRollbackOnly();

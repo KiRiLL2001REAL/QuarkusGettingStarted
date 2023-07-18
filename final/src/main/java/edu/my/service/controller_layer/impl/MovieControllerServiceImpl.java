@@ -58,8 +58,8 @@ public class MovieControllerServiceImpl implements MovieControllerService {
     }
 
     @Override
-    public void attachTags(Long id, Set<TagDTO> tagDTOSet) throws SystemException {
-        movieService.attachTags(id, tagMapper.toEntity(tagDTOSet));
+    public void attachTags(Long id, List<TagDTO> tagDTOList) throws SystemException {
+        movieService.attachTags(id, tagMapper.toEntity(tagDTOList));
     }
 
     @Override

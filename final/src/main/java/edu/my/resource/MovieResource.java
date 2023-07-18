@@ -20,6 +20,7 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.parameters.Parameter;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 
+import java.util.List;
 import java.util.Set;
 
 @Path("/movies")
@@ -175,9 +176,9 @@ public class MovieResource {
             @Parameter(description = "The movie ID to attach tag", required = true)
             @QueryParam("movie_id")
             Long id,
-            Set<@Valid TagDTO> tagDTOSet
+            List<@Valid TagDTO> tagDTOList
     ) throws SystemException {
-        movieControllerService.attachTags(id, tagDTOSet);
+        movieControllerService.attachTags(id, tagDTOList);
         return Response.ok(movieControllerService.getAttachedTags(id)).build();
     }
 

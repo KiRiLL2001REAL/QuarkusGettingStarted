@@ -5,7 +5,6 @@ import edu.my.data.dto.TagDTO;
 import jakarta.transaction.SystemException;
 
 import java.util.List;
-import java.util.Set;
 
 public interface MovieControllerService {
     void add(MovieDTO movieDTO);
@@ -16,7 +15,7 @@ public interface MovieControllerService {
 
     List<TagDTO> getAttachedTags(Long id);
     void attachTag(Long id, TagDTO tagDTO);
-    void attachTags(Long id, Set<TagDTO> tagDTOSet) throws SystemException;
+    void attachTags(Long id, List<TagDTO> tagDTOSet) throws SystemException;
     void detachTag(Long id, TagDTO tagDTO);
     void detachAllTags(Long id) throws SystemException;
 }
