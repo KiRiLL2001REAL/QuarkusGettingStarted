@@ -2,6 +2,7 @@ package edu.my.service.logic_layer.impl;
 
 import edu.my.data.entity.MovieHasTagEntity;
 import edu.my.data.entity.TagEntity;
+import edu.my.data.mapper.TagMapper;
 import edu.my.data.repository.MovieHasTagRepository;
 import edu.my.data.repository.TagRepository;
 import edu.my.exception.EntityIsNotFoundException;
@@ -17,6 +18,8 @@ public class TagServiceImpl implements TagService {
     TagRepository tagRepository;
     @Inject
     MovieHasTagRepository movieHasTagRepository;
+    @Inject
+    TagMapper tagMapper;
 
     @Override
     public void add(TagEntity tagEntity) {
@@ -45,7 +48,7 @@ public class TagServiceImpl implements TagService {
         if (notNullTag == null)
             throw new EntityIsNotFoundException("Can't find tag with id=" + id + ". Nothing to update.");
 
-        notNullTag.setName(tagData.getName());
+        tagMapper.mapTo(tagData, notNullTag);
 
         tagRepository.persist(notNullTag);
     }

@@ -17,7 +17,7 @@
     <skipITs>true</skipITs>
     <surefire-plugin.version>3.0.0</surefire-plugin.version>
     <mapstruct.version>1.5.2.Final</mapstruct.version>
-    <projectlombok.version>1.18.28</projectlombok.version>
+    <lombok.version>1.18.28</lombok.version>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -104,9 +104,10 @@
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
-      <version>${projectlombok.version}</version>
-      <scope>provided</scope>
+      <version>${lombok.version}</version>
+      <scope>compile</scope>
     </dependency>
+
 
   </dependencies>
   <build>
@@ -185,14 +186,14 @@
               <version>${quarkus.platform.version}</version>
             </path>
             <path>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok</artifactId>
+              <version>${lombok.version}</version>
+            </path>
+            <path>
               <groupId>org.mapstruct</groupId>
               <artifactId>mapstruct-processor</artifactId>
               <version>${mapstruct.version}</version>
-            </path>
-            <path>
-              <groupId>org.projectlombok</groupId>
-              <artifactId>lombok</artifactId>
-              <version>${projectlombok.version}</version>
             </path>
           </annotationProcessorPaths>
         </configuration>

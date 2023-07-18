@@ -3,16 +3,20 @@ package edu.my.data.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Objects;
 
 @Entity
 @Table(name = "movie_has_tag")
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
-public class MovieHasTagEntity extends PanacheEntityBase {
+public class MovieHasTagEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

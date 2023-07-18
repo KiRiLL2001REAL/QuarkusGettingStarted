@@ -2,7 +2,9 @@ package edu.my.data.entity;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.HashSet;
@@ -10,9 +12,11 @@ import java.util.Set;
 
 @Entity
 @Table(name = "movie")
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
-public class MovieEntity extends PanacheEntityBase {
+public class MovieEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

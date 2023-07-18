@@ -3,6 +3,7 @@ package edu.my.service.logic_layer.impl;
 import edu.my.data.entity.MovieEntity;
 import edu.my.data.entity.MovieHasTagEntity;
 import edu.my.data.entity.TagEntity;
+import edu.my.data.mapper.MovieMapper;
 import edu.my.data.repository.MovieHasTagRepository;
 import edu.my.data.repository.MovieRepository;
 import edu.my.exception.EntityIsNotFoundException;
@@ -23,6 +24,9 @@ public class MovieServiceImpl implements MovieService {
     MovieRepository movieRepository;
     @Inject
     MovieHasTagRepository movieHasTagRepository;
+    @Inject
+    MovieMapper movieMapper;
+
     @Inject
     TransactionManager transactionManager;
 
@@ -53,14 +57,7 @@ public class MovieServiceImpl implements MovieService {
         if (notNullMovie == null)
             throw new EntityIsNotFoundException("Can't find movie with id=" + id + ". Nothing to update.");
 
-        notNullMovie.setName(movieData.getName());
-        notNullMovie.setDescription(movieData.getDescription());
-        notNullMovie.setReasonsToView(movieData.getReasonsToView());
-        notNullMovie.setFacts(movieData.getFacts());
-        notNullMovie.setDurationInSeconds(movieData.getDurationInSeconds());
-        notNullMovie.setDistributor(movieData.getDistributor());
-        notNullMovie.setCountry(movieData.getCountry());
-        notNullMovie.setReleaseYear(movieData.getReleaseYear());
+        movieMapper.mapTo(movieData, notNullMovie);
 
         movieRepository.persist(notNullMovie);
     }
