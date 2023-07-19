@@ -1,5 +1,125 @@
 databaseChangeLog:
-#  - changeSet:
-#      id: init-table-tag
-#      author: Baturin K.A.
-#      changes:
+  - changeSet:
+      id: init-data-tag
+      author: Baturin K.A.
+      changes:
+        - insert:
+            schemaName: public
+            tableName: tag
+            dbms: 'postgresql'
+            columns:
+              - column:
+                  name: name
+                  value: "0+"
+        - insert:
+            schemaName: public
+            tableName: tag
+            dbms: 'postgresql'
+            columns:
+              - column:
+                  name: name
+                  value: "6+"
+        - insert:
+            schemaName: public
+            tableName: tag
+            dbms: 'postgresql'
+            columns:
+              - column:
+                  name: name
+                  value: "12+"
+        - insert:
+            schemaName: public
+            tableName: tag
+            dbms: 'postgresql'
+            columns:
+              - column:
+                  name: name
+                  value: "16+"
+        - insert:
+            schemaName: public
+            tableName: tag
+            dbms: 'postgresql'
+            columns:
+              - column:
+                  name: name
+                  value: "18+"
+        - insert:
+            schemaName: public
+            tableName: tag
+            dbms: 'postgresql'
+            columns:
+              - column:
+                  name: name
+                  value: "Драма"
+        - insert:
+            schemaName: public
+            tableName: tag
+            dbms: 'postgresql'
+            columns:
+              - column:
+                  name: name
+                  value: "Триллер"
+        - insert:
+            schemaName: public
+            tableName: tag
+            dbms: 'postgresql'
+            columns:
+              - column:
+                  name: name
+                  value: "Боевик"
+        - insert:
+            schemaName: public
+            tableName: tag
+            dbms: 'postgresql'
+            columns:
+              - column:
+                  name: name
+                  value: "Детектив"
+        - insert:
+            schemaName: public
+            tableName: tag
+            dbms: 'postgresql'
+            columns:
+              - column:
+                  name: name
+                  value: "Анимация"
+        - insert:
+            schemaName: public
+            tableName: tag
+            dbms: 'postgresql'
+            columns:
+              - column:
+                  name: name
+                  value: "Комедия"
+        - insert:
+            schemaName: public
+            tableName: tag
+            dbms: 'postgresql'
+            columns:
+              - column:
+                  name: name
+                  value: "Музыка"
+        - insert:
+            schemaName: public
+            tableName: tag
+            dbms: 'postgresql'
+            columns:
+              - column:
+                  name: name
+                  value: "Мелодрама"
+        - insert:
+            schemaName: public
+            tableName: tag
+            dbms: 'postgresql'
+            columns:
+              - column:
+                  name: name
+                  value: "Приключения"
+        - insert:
+            schemaName: public
+            tableName: tag
+            dbms: 'postgresql'
+            columns:
+              - column:
+                  name: name
+                  value: "Ужасы"

@@ -1,7 +1,7 @@
 databaseChangeLog:
   - include:
-      file: changesets/init/main.yaml
-      relativeToChangelogFile: true
+      file: db/changesets/init/main.yaml
+      relativeToChangelogFile: false
   - include:
-      file: changesets/change/main.yaml
-      relativeToChangelogFile: true
+      file: db/changesets/change/main.yaml
+      relativeToChangelogFile: false

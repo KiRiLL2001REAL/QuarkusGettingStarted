@@ -3,6 +3,15 @@ databaseChangeLog:
       id: init-table-movie_has_tag
       author: Baturin K.A.
       changes:
+        - createSequence:
+            schemaName: public
+            sequenceName: movie_has_tag_id_seq
+            incrementBy: 1
+            startValue: 1
+            minValue: 1
+            maxValue: 9223372036854775807
+            cacheSize: 1
+            cycled: false
         - createTable:
             tableName: movie_has_tag
             columns:
@@ -10,9 +19,10 @@ databaseChangeLog:
                   name: id
                   type: BIGINT
                   remarks: Идентификатор связи фильма с тегом (первичный ключ)
-                  autoIncrement: true
+                  defaultValueSequenceNext: movie_has_tag_id_seq
                   constraints:
                     primaryKey: true
+                    unique: true
                     nullable: false
               - column:
                   name: id_movie
@@ -20,9 +30,11 @@ databaseChangeLog:
                   remarks: Идентификатор фильма (внешний ключ)
                   constraints:
                     references: movie(id)
+                    foreignKeyName: id_movie_fk
               - column:
                   name: id_tag
                   type: BIGINT
                   remarks: Идентификатор тега (внешний ключ)
                   constraints:
                     references: tag(id)
+                    foreignKeyName: id_tag_fk

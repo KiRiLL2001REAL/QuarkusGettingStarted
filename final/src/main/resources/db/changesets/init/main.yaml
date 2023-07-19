@@ -1,10 +1,19 @@
 databaseChangeLog:
   - include:
-      file: tables/movie/main.yaml
-      relativeToChangelogFile: true
+      file: db/changesets/init/tables/movie/main.yaml
+      relativeToChangelogFile: false
   - include:
-      file: tables/tag/main.yaml
-      relativeToChangelogFile: true
+      file: db/changesets/init/tables/tag/main.yaml
+      relativeToChangelogFile: false
   - include:
-      file: tables/movie_has_tag/main.yaml
-      relativeToChangelogFile: true
+      file: db/changesets/init/tables/movie_has_tag/main.yaml
+      relativeToChangelogFile: false
+  - include:
+      file: db/changesets/init/data/movie/main.yaml
+      relativeToChangelogFile: false
+  - include:
+      file: db/changesets/init/data/tag/main.yaml
+      relativeToChangelogFile: false
+  - include:
+      file: db/changesets/init/data/movie_has_tag/main.yaml
+      relativeToChangelogFile: false

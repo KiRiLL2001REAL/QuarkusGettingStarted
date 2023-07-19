@@ -1,1 +1,6 @@
 databaseChangeLog:
+  -  changeSet:
+       id:  empty_changeset
+       author:  nobody
+       changes:
+         -  empty:  {}

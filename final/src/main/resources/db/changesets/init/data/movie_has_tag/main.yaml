@@ -1,5 +1,324 @@
 databaseChangeLog:
-#  - changeSet:
-#      id: init-table-movie_has_tag
-#      author: Baturin K.A.
-#      changes:
+  - changeSet:
+      id: init-data-movie_has_tag
+      author: Baturin K.A.
+      changes:
+        - insert:
+            schemaName: public
+            tableName: movie_has_tag
+            dbms: 'postgresql'
+            columns:
+              - column:
+                  name: id_movie
+                  value: 1
+              - column:
+                  name: id_tag
+                  value: 4
+        - insert:
+            schemaName: public
+            tableName: movie_has_tag
+            dbms: 'postgresql'
+            columns:
+              - column:
+                  name: id_movie
+                  value: 1
+              - column:
+                  name: id_tag
+                  value: 6
+        - insert:
+            schemaName: public
+            tableName: movie_has_tag
+            dbms: 'postgresql'
+            columns:
+              - column:
+                  name: id_movie
+                  value: 1
+              - column:
+                  name: id_tag
+                  value: 7
+        - insert:
+            schemaName: public
+            tableName: movie_has_tag
+            dbms: 'postgresql'
+            columns:
+              - column:
+                  name: id_movie
+                  value: 2
+              - column:
+                  name: id_tag
+                  value: 5
+        - insert:
+            schemaName: public
+            tableName: movie_has_tag
+            dbms: 'postgresql'
+            columns:
+              - column:
+                  name: id_movie
+                  value: 2
+              - column:
+                  name: id_tag
+                  value: 8
+        - insert:
+            schemaName: public
+            tableName: movie_has_tag
+            dbms: 'postgresql'
+            columns:
+              - column:
+                  name: id_movie
+                  value: 2
+              - column:
+                  name: id_tag
+                  value: 9
+        - insert:
+            schemaName: public
+            tableName: movie_has_tag
+            dbms: 'postgresql'
+            columns:
+              - column:
+                  name: id_movie
+                  value: 2
+              - column:
+                  name: id_tag
+                  value: 7
+        - insert:
+            schemaName: public
+            tableName: movie_has_tag
+            dbms: 'postgresql'
+            columns:
+              - column:
+                  name: id_movie
+                  value: 3
+              - column:
+                  name: id_tag
+                  value: 4
+        - insert:
+            schemaName: public
+            tableName: movie_has_tag
+            dbms: 'postgresql'
+            columns:
+              - column:
+                  name: id_movie
+                  value: 3
+              - column:
+                  name: id_tag
+                  value: 8
+        - insert:
+            schemaName: public
+            tableName: movie_has_tag
+            dbms: 'postgresql'
+            columns:
+              - column:
+                  name: id_movie
+                  value: 4
+              - column:
+                  name: id_tag
+                  value: 3
+        - insert:
+            schemaName: public
+            tableName: movie_has_tag
+            dbms: 'postgresql'
+            columns:
+              - column:
+                  name: id_movie
+                  value: 4
+              - column:
+                  name: id_tag
+                  value: 8
+        - insert:
+            schemaName: public
+            tableName: movie_has_tag
+            dbms: 'postgresql'
+            columns:
+              - column:
+                  name: id_movie
+                  value: 4
+              - column:
+                  name: id_tag
+                  value: 6
+        - insert:
+            schemaName: public
+            tableName: movie_has_tag
+            dbms: 'postgresql'
+            columns:
+              - column:
+                  name: id_movie
+                  value: 4
+              - column:
+                  name: id_tag
+                  value: 7
+        - insert:
+            schemaName: public
+            tableName: movie_has_tag
+            dbms: 'postgresql'
+            columns:
+              - column:
+                  name: id_movie
+                  value: 5
+              - column:
+                  name: id_tag
+                  value: 2
+        - insert:
+            schemaName: public
+            tableName: movie_has_tag
+            dbms: 'postgresql'
+            columns:
+              - column:
+                  name: id_movie
+                  value: 5
+              - column:
+                  name: id_tag
+                  value: 10
+        - insert:
+            schemaName: public
+            tableName: movie_has_tag
+            dbms: 'postgresql'
+            columns:
+              - column:
+                  name: id_movie
+                  value: 6
+              - column:
+                  name: id_tag
+                  value: 5
+        - insert:
+            schemaName: public
+            tableName: movie_has_tag
+            dbms: 'postgresql'
+            columns:
+              - column:
+                  name: id_movie
+                  value: 6
+              - column:
+                  name: id_tag
+                  value: 7
+        - insert:
+            schemaName: public
+            tableName: movie_has_tag
+            dbms: 'postgresql'
+            columns:
+              - column:
+                  name: id_movie
+                  value: 7
+              - column:
+                  name: id_tag
+                  value: 4
+        - insert:
+            schemaName: public
+            tableName: movie_has_tag
+            dbms: 'postgresql'
+            columns:
+              - column:
+                  name: id_movie
+                  value: 7
+              - column:
+                  name: id_tag
+                  value: 11
+        - insert:
+            schemaName: public
+            tableName: movie_has_tag
+            dbms: 'postgresql'
+            columns:
+              - column:
+                  name: id_movie
+                  value: 7
+              - column:
+                  name: id_tag
+                  value: 12
+        - insert:
+            schemaName: public
+            tableName: movie_has_tag
+            dbms: 'postgresql'
+            columns:
+              - column:
+                  name: id_movie
+                  value: 8
+              - column:
+                  name: id_tag
+                  value: 1
+        - insert:
+            schemaName: public
+            tableName: movie_has_tag
+            dbms: 'postgresql'
+            columns:
+              - column:
+                  name: id_movie
+                  value: 8
+              - column:
+                  name: id_tag
+                  value: 10
+        - insert:
+            schemaName: public
+            tableName: movie_has_tag
+            dbms: 'postgresql'
+            columns:
+              - column:
+                  name: id_movie
+                  value: 9
+              - column:
+                  name: id_tag
+                  value: 5
+        - insert:
+            schemaName: public
+            tableName: movie_has_tag
+            dbms: 'postgresql'
+            columns:
+              - column:
+                  name: id_movie
+                  value: 9
+              - column:
+                  name: id_tag
+                  value: 13
+        - insert:
+            schemaName: public
+            tableName: movie_has_tag
+            dbms: 'postgresql'
+            columns:
+              - column:
+                  name: id_movie
+                  value: 9
+              - column:
+                  name: id_tag
+                  value: 6
+        - insert:
+            schemaName: public
+            tableName: movie_has_tag
+            dbms: 'postgresql'
+            columns:
+              - column:
+                  name: id_movie
+                  value: 9
+              - column:
+                  name: id_tag
+                  value: 14
+        - insert:
+            schemaName: public
+            tableName: movie_has_tag
+            dbms: 'postgresql'
+            columns:
+              - column:
+                  name: id_movie
+                  value: 10
+              - column:
+                  name: id_tag
+                  value: 5
+        - insert:
+            schemaName: public
+            tableName: movie_has_tag
+            dbms: 'postgresql'
+            columns:
+              - column:
+                  name: id_movie
+                  value: 10
+              - column:
+                  name: id_tag
+                  value: 15
+        - insert:
+            schemaName: public
+            tableName: movie_has_tag
+            dbms: 'postgresql'
+            columns:
+              - column:
+                  name: id_movie
+                  value: 10
+              - column:
+                  name: id_tag
+                  value: 7

@@ -3,16 +3,26 @@ databaseChangeLog:
       id: init-table-tag
       author: Baturin K.A.
       changes:
+        - createSequence:
+            schemaName: public
+            sequenceName: tag_id_seq
+            incrementBy: 1
+            startValue: 1
+            minValue: 1
+            maxValue: 9223372036854775807
+            cacheSize: 1
+            cycled: false
         - createTable:
             tableName: tag
             columns:
               - column:
                   name: id
                   type: BIGINT
-                  remarks: Идентификатор тэга (первичный ключ)
-                  autoIncrement: true
+                  remarks: Идентификатор тега (первичный ключ)
+                  defaultValueSequenceNext: tag_id_seq
                   constraints:
                     primaryKey: true
+                    unique: true
                     nullable: false
               - column:
                   name: name

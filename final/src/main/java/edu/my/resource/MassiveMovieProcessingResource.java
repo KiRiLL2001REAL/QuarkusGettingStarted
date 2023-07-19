@@ -1,8 +1,8 @@
 package edu.my.resource;
 
 import edu.my.data.dto.MovieDTO;
-import edu.my.service.logic_layer.MassiveMovieProcessingService;
-import edu.my.service.logic_layer.MovieService;
+import edu.my.service.controller_layer.MassiveMovieProcessingControllerService;
+import edu.my.service.controller_layer.MovieControllerService;
 import io.quarkus.arc.profile.IfBuildProfile;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -24,9 +24,9 @@ import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 @IfBuildProfile("teststand")
 public class MassiveMovieProcessingResource {
     @Inject
-    MassiveMovieProcessingService massiveMovieService;
+    MassiveMovieProcessingControllerService massiveMovieProcessingControllerService;
     @Inject
-    MovieService movieService;
+    MovieControllerService movieControllerService;
 
     @POST
     @Path("/{count}")
@@ -42,22 +42,22 @@ public class MassiveMovieProcessingResource {
     public Response add(
             @Parameter(description = "The number of movies to create", required = true)
             @PathParam("count") int count
-    ){
-        massiveMovieService.add(count);
-        return Response.status(Response.Status.CREATED).entity(movieService.getAll()).build();
+    ) {
+        massiveMovieProcessingControllerService.add(count);
+        return Response.status(Response.Status.CREATED).entity(movieControllerService.getAll()).build();
     }
 
     @PUT
     @Transactional
     @Counted(name = "performedUpdateMassiveMovie", description = "How many massive update was called")
     @Timed(name = "updateMassiveMovieTimer", description = "A measure of how long it takes to update all movies", unit = MetricUnits.MILLISECONDS)
-    @Operation(summary = "Update all existing movies", description = "Updates all movies")
+    @Operation(summary = "Update all existing movies", description = "Updates all movies facts")
     @APIResponse(
             responseCode = "200",
             description = "Movies are updated",
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = MovieDTO.class)))
-    public Response add(){
-        massiveMovieService.updateAllFacts();
-        return Response.status(Response.Status.CREATED).entity(movieService.getAll()).build();
+    public Response updateAllFacts() {
+        massiveMovieProcessingControllerService.updateAllFacts();
+        return Response.status(Response.Status.CREATED).entity(movieControllerService.getAll()).build();
     }
 }
