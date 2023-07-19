@@ -17,6 +17,7 @@ import jakarta.transaction.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @ApplicationScoped
 public class MovieServiceImpl implements MovieService {
@@ -45,45 +46,50 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public MovieEntity getById(Long id) {
-        MovieEntity notNullMovie = movieRepository.findById(id);
-        if (notNullMovie == null)
+        Optional<MovieEntity> shouldBeNotNullMovie = movieRepository.findByIdOptional(id);
+        if (shouldBeNotNullMovie.isEmpty())
             throw new EntityIsNotFoundException("Can't find movie with id=" + id + ".");
-        return notNullMovie;
+        return shouldBeNotNullMovie.get();
     }
 
     @Override
     public void update(Long id, MovieEntity movieData) {
-        MovieEntity notNullMovie = movieRepository.findById(id);
-        if (notNullMovie == null)
+        Optional<MovieEntity> shouldBeNotNullMovie = movieRepository.findByIdOptional(id);
+        if (shouldBeNotNullMovie.isEmpty())
             throw new EntityIsNotFoundException("Can't find movie with id=" + id + ". Nothing to update.");
 
-        movieMapper.mapTo(movieData, notNullMovie);
+        MovieEntity movieEntity = shouldBeNotNullMovie.get();
 
-        movieRepository.persist(notNullMovie);
+        movieMapper.mapTo(movieData, movieEntity);
+        movieRepository.persist(movieEntity);
     }
 
     @Override
     public void deleteById(Long id) {
-        MovieEntity notNullMovie = movieRepository.findById(id);
-        if (notNullMovie == null)
+        Optional<MovieEntity> shouldBeNotNullMovie = movieRepository.findByIdOptional(id);
+        if (shouldBeNotNullMovie.isEmpty())
             throw new EntityIsNotFoundException("Can't find movie with id=" + id + ". Nothing to delete.");
 
-        for (MovieHasTagEntity link : notNullMovie.getLinks()) {
+        MovieEntity movieEntity = shouldBeNotNullMovie.get();
+
+        for (MovieHasTagEntity link : movieEntity.getLinks()) {
             link.getTagEntity().getLinks().remove(link);
             movieHasTagRepository.delete(link);
         }
-        notNullMovie.setLinks(null);
 
+        movieEntity.setLinks(null);
         movieRepository.deleteById(id);
     }
 
     @Override
     public List<TagEntity> getAttachedTags(Long id) {
-        MovieEntity notNullMovie = movieRepository.findById(id);
-        if (notNullMovie == null)
+        Optional<MovieEntity> shouldBeNotNullMovie = movieRepository.findByIdOptional(id);
+        if (shouldBeNotNullMovie.isEmpty())
             throw new EntityIsNotFoundException("Can't find movie with id=" + id + ".");
 
-        List<MovieHasTagEntity> linkList = movieHasTagRepository.find("movieEntity = ?1", notNullMovie).list();
+        MovieEntity movieEntity = shouldBeNotNullMovie.get();
+
+        List<MovieHasTagEntity> linkList = movieHasTagRepository.find("movieEntity = ?1", movieEntity).list();
         List<TagEntity> tagList = new ArrayList<>();
         for (MovieHasTagEntity link : linkList)
             tagList.add(link.getTagEntity());
@@ -93,20 +99,22 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public void attachTag(Long id, TagEntity tagEntity) {
-        MovieEntity notNullMovie = movieRepository.findById(id);
-        if (notNullMovie == null)
+        Optional<MovieEntity> shouldBeNotNullMovie = movieRepository.findByIdOptional(id);
+        if (shouldBeNotNullMovie.isEmpty())
             throw new EntityIsNotFoundException("Can't find movie with id=" + id + ". Nothing to attach to.");
 
-        MovieHasTagEntity mustBeNullLink = movieHasTagRepository.find("movieEntity = ?1 AND tagEntity = ?2", notNullMovie, tagEntity).firstResult();
+        MovieEntity movieEntity = shouldBeNotNullMovie.get();
+
+        MovieHasTagEntity mustBeNullLink = movieHasTagRepository.find("movieEntity = ?1 AND tagEntity = ?2", movieEntity, tagEntity).firstResult();
         if (mustBeNullLink != null)
-            throw new TagIsAlreadyBoundException("Tag '" + mustBeNullLink.getTagEntity().getName() + "' is already bound to movie '" + notNullMovie.getName() + "'.");
+            throw new TagIsAlreadyBoundException("Tag '" + mustBeNullLink.getTagEntity().getName() + "' is already bound to movie '" + movieEntity.getName() + "'.");
 
         MovieHasTagEntity link = new MovieHasTagEntity();
-        link.setMovieEntity(notNullMovie);
+        link.setMovieEntity(movieEntity);
         link.setTagEntity(tagEntity);
         movieHasTagRepository.persist(link);
 
-        notNullMovie.addLink(link);
+        movieEntity.addLink(link);
         tagEntity.addLink(link);
     }
 
@@ -124,28 +132,34 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public void detachTag(Long id, TagEntity tagEntity) {
-        MovieEntity notNullMovie = movieRepository.findById(id);
-        if (notNullMovie == null)
+        Optional<MovieEntity> shouldBeNotNullMovie = movieRepository.findByIdOptional(id);
+        if (shouldBeNotNullMovie.isEmpty())
             throw new EntityIsNotFoundException("Can't find movie with id=" + id + ".");
 
-        MovieHasTagEntity notNullLink = movieHasTagRepository.find("movieEntity = ?1 AND tagEntity = ?2", notNullMovie, tagEntity).firstResult();
-        if (notNullLink == null)
+        MovieEntity movieEntity = shouldBeNotNullMovie.get();
+
+        Optional<MovieHasTagEntity> shouldBeNotNullLink = movieHasTagRepository.find("movieEntity = ?1 AND tagEntity = ?2", movieEntity, tagEntity).firstResultOptional();
+        if (shouldBeNotNullLink.isEmpty())
             throw new EntityIsNotFoundException("Can't find link with movieId=" + id + " and tagId=" + tagEntity.getId() + ". Nothing to detach.");
 
-        notNullMovie.removeLink(notNullLink);
-        tagEntity.removeLink(notNullLink);
-        movieHasTagRepository.delete(notNullLink);
+        MovieHasTagEntity movieHasTagEntity = shouldBeNotNullLink.get();
+
+        movieEntity.removeLink(movieHasTagEntity);
+        tagEntity.removeLink(movieHasTagEntity);
+        movieHasTagRepository.delete(movieHasTagEntity);
     }
 
     @Override
     @Transactional
     public void detachAllTags(Long id) throws SystemException {
         try {
-            MovieEntity notNullMovie = movieRepository.findById(id);
-            if (notNullMovie == null)
+            Optional<MovieEntity> shouldBeNotNullMovie = movieRepository.findByIdOptional(id);
+            if (shouldBeNotNullMovie.isEmpty())
                 throw new EntityIsNotFoundException("Can't find movie with id=" + id + ".");
 
-            List<MovieHasTagEntity> linksToDetach = movieHasTagRepository.find("movieEntity = ?1", notNullMovie).list();
+            MovieEntity movieEntity = shouldBeNotNullMovie.get();
+
+            List<MovieHasTagEntity> linksToDetach = movieHasTagRepository.find("movieEntity = ?1", movieEntity).list();
             for (MovieHasTagEntity link : linksToDetach)
                 detachTag(id, link.getTagEntity());
         } catch (EntityIsNotFoundException e) {

@@ -11,6 +11,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
 import java.util.List;
+import java.util.Optional;
 
 @ApplicationScoped
 public class TagServiceImpl implements TagService {
@@ -36,34 +37,37 @@ public class TagServiceImpl implements TagService {
 
     @Override
     public TagEntity getById(Long id) {
-        TagEntity notNullTag = tagRepository.findById(id);
-        if (notNullTag == null)
+        Optional<TagEntity> shouldBeNotNullTag = tagRepository.findByIdOptional(id);
+        if (shouldBeNotNullTag.isEmpty())
             throw new EntityIsNotFoundException("Can't find tag with id=" + id + ".");
-        return notNullTag;
+        return shouldBeNotNullTag.get();
     }
 
     @Override
     public void update(Long id, TagEntity tagData) {
-        TagEntity notNullTag = tagRepository.findById(id);
-        if (notNullTag == null)
+        Optional<TagEntity> shouldBeNotNullTag = tagRepository.findByIdOptional(id);
+        if (shouldBeNotNullTag.isEmpty())
             throw new EntityIsNotFoundException("Can't find tag with id=" + id + ". Nothing to update.");
 
-        tagMapper.mapTo(tagData, notNullTag);
+        TagEntity tagEntity = shouldBeNotNullTag.get();
 
-        tagRepository.persist(notNullTag);
+        tagMapper.mapTo(tagData, tagEntity);
+        tagRepository.persist(tagEntity);
     }
 
     @Override
     public void deleteById(Long id) {
-        TagEntity notNullTag = tagRepository.findById(id);
-        if (notNullTag == null)
+        Optional<TagEntity> shouldBeNotNullTag = tagRepository.findByIdOptional(id);
+        if (shouldBeNotNullTag.isEmpty())
             throw new EntityIsNotFoundException("Can't find tag with id=" + id + ". Nothing to delete.");
 
-        for (MovieHasTagEntity link : notNullTag.getLinks()) {
+        TagEntity tagEntity = shouldBeNotNullTag.get();
+
+        for (MovieHasTagEntity link : tagEntity.getLinks()) {
             link.getMovieEntity().getLinks().remove(link);
             movieHasTagRepository.delete(link);
         }
-        notNullTag.setLinks(null);
+        tagEntity.setLinks(null);
 
         tagRepository.deleteById(id);
     }
