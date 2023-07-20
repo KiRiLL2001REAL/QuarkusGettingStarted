@@ -1,6 +1,6 @@
 package edu.my.data.mapper;
 
-import edu.my.data.dto.MovieHasTagDTO;
+import edu.my.api.dto.MovieHasTagDTO;
 import edu.my.data.entity.MovieHasTagEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.NullValuePropertyMappingStrategy;

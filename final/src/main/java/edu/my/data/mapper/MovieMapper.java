@@ -1,6 +1,6 @@
 package edu.my.data.mapper;
 
-import edu.my.data.dto.MovieDTO;
+import edu.my.api.dto.MovieDTO;
 import edu.my.data.entity.MovieEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
