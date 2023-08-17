@@ -1,6 +1,6 @@
 package edu.my.service.controller_layer;
 
-import edu.my.api.dto.TagDTO;
+import edu.my.data.dto.TagDTO;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package edu.my.api.dto;
+package edu.my.data.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.NotBlank;

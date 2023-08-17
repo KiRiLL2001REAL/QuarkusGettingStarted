@@ -1,4 +1,4 @@
-package edu.my.api.dto;
+package edu.my.data.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;

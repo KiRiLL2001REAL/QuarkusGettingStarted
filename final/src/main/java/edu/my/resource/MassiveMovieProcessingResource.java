@@ -1,6 +1,6 @@
 package edu.my.resource;
 
-import edu.my.api.dto.MovieDTO;
+import edu.my.data.dto.MovieDTO;
 import edu.my.service.controller_layer.MassiveMovieProcessingControllerService;
 import edu.my.service.controller_layer.MovieControllerService;
 import io.quarkus.arc.profile.IfBuildProfile;
@@ -41,8 +41,7 @@ public class MassiveMovieProcessingResource {
     )
     public Response add(
             @Parameter(description = "The number of movies to create", required = true)
-            @PathParam("count")
-            int count
+            @PathParam("count") int count
     ) {
         massiveMovieProcessingControllerService.add(count);
         return Response.status(Response.Status.CREATED).entity(movieControllerService.getAll()).build();

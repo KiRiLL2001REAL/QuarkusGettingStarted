@@ -1,7 +1,7 @@
 package edu.my.resource;
 
-import edu.my.api.dto.MovieDTO;
-import edu.my.api.dto.TagDTO;
+import edu.my.data.dto.MovieDTO;
+import edu.my.data.dto.TagDTO;
 import edu.my.service.controller_layer.MovieControllerService;
 import jakarta.inject.Inject;
 import jakarta.transaction.SystemException;
@@ -20,6 +20,7 @@ import org.eclipse.microprofile.openapi.annotations.parameters.Parameter;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 
 import java.util.List;
+import java.util.Set;
 
 @Path("/movies")
 @Produces(MediaType.APPLICATION_JSON)
