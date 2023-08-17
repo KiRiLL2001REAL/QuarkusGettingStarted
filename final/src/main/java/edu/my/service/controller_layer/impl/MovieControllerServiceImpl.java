@@ -1,7 +1,7 @@
 package edu.my.service.controller_layer.impl;
 
-import edu.my.data.dto.MovieDTO;
-import edu.my.data.dto.TagDTO;
+import edu.my.API.data.dto.MovieDTO;
+import edu.my.API.data.dto.TagDTO;
 import edu.my.data.mapper.MovieMapper;
 import edu.my.data.mapper.TagMapper;
 import edu.my.service.controller_layer.MovieControllerService;

@@ -1,61 +1,43 @@
-package edu.my.resource;
+package edu.my.resource.impl;
 
-import edu.my.data.dto.MovieDTO;
+import edu.my.API.resource.MassiveMovieResource;
 import edu.my.service.controller_layer.MassiveMovieProcessingControllerService;
 import edu.my.service.controller_layer.MovieControllerService;
 import io.quarkus.arc.profile.IfBuildProfile;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
-import jakarta.ws.rs.*;
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.eclipse.microprofile.metrics.MetricUnits;
 import org.eclipse.microprofile.metrics.annotation.Counted;
 import org.eclipse.microprofile.metrics.annotation.Timed;
-import org.eclipse.microprofile.openapi.annotations.Operation;
-import org.eclipse.microprofile.openapi.annotations.media.Content;
-import org.eclipse.microprofile.openapi.annotations.media.Schema;
-import org.eclipse.microprofile.openapi.annotations.parameters.Parameter;
-import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 
-@Path("/massive_movie_processing")
+@Path("/massive_movie")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @IfBuildProfile("teststand")
-public class MassiveMovieProcessingResource {
+public class MassiveMovieResourceImpl implements MassiveMovieResource {
     @Inject
     MassiveMovieProcessingControllerService massiveMovieProcessingControllerService;
     @Inject
     MovieControllerService movieControllerService;
 
-    @POST
-    @Path("/{count}")
+    @Override
     @Transactional
     @Counted(name = "performedAddMassiveMovie", description = "How many massive add was called")
     @Timed(name = "addMassiveMovieTimer", description = "A measure of how long it takes to add all movies", unit = MetricUnits.MILLISECONDS)
-    @Operation(summary = "Add fake movies", description = "Adds new movies")
-    @APIResponse(
-            responseCode = "201",
-            description = "Movies are added",
-            content = @Content(mediaType = "application/json", schema = @Schema(implementation = MovieDTO.class))
-    )
-    public Response add(
-            @Parameter(description = "The number of movies to create", required = true)
-            @PathParam("count") int count
-    ) {
+    public Response add(int count) {
         massiveMovieProcessingControllerService.add(count);
         return Response.status(Response.Status.CREATED).entity(movieControllerService.getAll()).build();
     }
 
-    @PUT
+    @Override
     @Transactional
     @Counted(name = "performedUpdateMassiveMovie", description = "How many massive update was called")
     @Timed(name = "updateMassiveMovieTimer", description = "A measure of how long it takes to update all movies", unit = MetricUnits.MILLISECONDS)
-    @Operation(summary = "Update all existing movies", description = "Updates all movies facts")
-    @APIResponse(
-            responseCode = "200",
-            description = "Movies are updated",
-            content = @Content(mediaType = "application/json", schema = @Schema(implementation = MovieDTO.class)))
     public Response updateAllFacts() {
         massiveMovieProcessingControllerService.updateAllFacts();
         return Response.status(Response.Status.CREATED).entity(movieControllerService.getAll()).build();

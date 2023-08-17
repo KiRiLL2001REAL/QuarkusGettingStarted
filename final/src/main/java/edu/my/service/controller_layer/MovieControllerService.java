@@ -1,7 +1,7 @@
 package edu.my.service.controller_layer;
 
-import edu.my.data.dto.MovieDTO;
-import edu.my.data.dto.TagDTO;
+import edu.my.API.data.dto.MovieDTO;
+import edu.my.API.data.dto.TagDTO;
 import jakarta.transaction.SystemException;
 
 import java.util.List;

@@ -1,6 +1,6 @@
 package edu.my.data.mapper;
 
-import edu.my.data.dto.TagDTO;
+import edu.my.API.data.dto.TagDTO;
 import edu.my.data.entity.TagEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
